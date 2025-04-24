@@ -1,0 +1,4 @@
+repository "RPG2D-ProjetoPessoal/RPG2D-ProjetoPessoal@4674080942716@cloud"
+  path "/"
+    br "/main"
+    co "/main"
