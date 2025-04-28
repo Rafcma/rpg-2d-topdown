@@ -5,6 +5,15 @@ using UnityEngine.UI;
 
 public class DialogueControl : MonoBehaviour
 {
+    [System.Serializable]
+    public enum idiom
+    {
+        pt,
+        eng,
+        spa
+    }
+    public idiom language;
+
     [Header("Components")]
     public GameObject dialogueObj; // janela do dialogo
     public Image profileSprite; // sprite do perfil
@@ -15,11 +24,19 @@ public class DialogueControl : MonoBehaviour
     public float typingSpeed; // velocidade da fala
 
     //váriaveis de controle
-    private bool isShowing; // mostra se a janela está ativa
+    public bool isShowing; // mostra se a janela está ativa
     private int index; // contagem para falas (index de loop)
     private string[] sentences;
 
+    public static DialogueControl instance;
 
+    //awake é chamado antes de todos Start()
+    private void Awake()
+    {
+        instance = this;
+    }
+
+    //chamado ao inicializar
     void Start()
     {
         
@@ -44,7 +61,23 @@ public class DialogueControl : MonoBehaviour
     // pular para próxima fala
     public void NextSentence()
     {
-
+        if(speechText.text == sentences[index]) // acabou a fala, habilita o pular
+        {
+            if(index < sentences.Length - 1)
+            {
+                index++;
+                speechText.text = "";
+                StartCoroutine(TypeSentence());
+            }
+            else //quando termina os textos
+            {
+                speechText.text = "";
+                index = 0;
+                dialogueObj.SetActive(false);
+                sentences = null;
+                isShowing = false;
+            }
+        }
     }
 
     // chamar a fala

@@ -16,9 +16,27 @@ MonoBehaviour:
   speakerSprite: {fileID: 0}
   sentence: 
   dialogues:
-  - actorName: 
+  - actorName: ela
     profile: {fileID: -1146410444, guid: cb29a36c289b25b4c90c74e15a973805, type: 3}
     sentence:
-      portuguese: "ol\xE1"
+      portuguese: "ol\xE1 faz tempo que nao te vejo"
+      english: 
+      spanish: 
+  - actorName: eu
+    profile: {fileID: 0}
+    sentence:
+      portuguese: tudo bem?
+      english: 
+      spanish: 
+  - actorName: ela
+    profile: {fileID: 0}
+    sentence:
+      portuguese: td bem?
+      english: 
+      spanish: 
+  - actorName: eu
+    profile: {fileID: 0}
+    sentence:
+      portuguese: sim
       english: 
       spanish: 
