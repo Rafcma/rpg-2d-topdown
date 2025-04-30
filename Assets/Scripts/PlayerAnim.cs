@@ -7,10 +7,14 @@ public class PlayerAnim : MonoBehaviour
     private Player player;
     private Animator anim;
 
+    private Casting cast;
+
     void Start()
     {
         player = GetComponent<Player>();
         anim = GetComponent<Animator>();
+
+        cast = FindObjectOfType<Casting>();
     }
 
     // Update é chamado uma vez a cada frame
@@ -68,4 +72,22 @@ public class PlayerAnim : MonoBehaviour
         }
     }
     #endregion
+
+    #region Fishing
+    //chamado quando player pressiona botão de ação acima da lagoa
+    public void OnCastingStarted()
+    {
+        anim.SetTrigger("isCasting");
+        player.isPaused = true;
+    }
+    //testado quando termina animação
+    public void OnCastingEnded()
+    {
+        cast.OnCasting();
+        player.isPaused = false;
+    }
+
+
+    #endregion
+
 }

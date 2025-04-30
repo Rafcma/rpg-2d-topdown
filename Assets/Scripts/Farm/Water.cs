@@ -9,18 +9,16 @@ public class Water : MonoBehaviour
 
     private PlayerItems player;
 
-    // Start is called before the first frame update
     void Start()
     {
         player = FindObjectOfType<PlayerItems>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(detectingPlayer && Input.GetKeyDown(KeyCode.E))
         {
-            player.WaterLimit(waterValue);
+            player.CheckWaterLimit(waterValue);
         }
     }
 

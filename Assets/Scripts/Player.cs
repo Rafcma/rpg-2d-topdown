@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public bool isPaused;
+
     [SerializeField] private float speed;
     [SerializeField] private float runSpeed;
 
@@ -21,7 +23,7 @@ public class Player : MonoBehaviour
 
     private Vector2 _direction;
 
-    private int handlingObj;
+    [HideInInspector] public int handlingObj;
 
     public Vector2 direction
     {
@@ -63,40 +65,45 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (!isPaused)
         {
-            handlingObj = 1;
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                handlingObj = 0;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                handlingObj = 1;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                handlingObj = 2;
+            }
+
+            OnInput();
+            OnRun();
+            OnRoll();
+            OnCut();
+            OnDig();
+            OnWatering();
         }
-
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            handlingObj = 2;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            handlingObj = 3;
-        }
-
-
-
-        OnInput();
-        OnRun();
-        OnRoll();
-        OnCut();
-        OnDig();
-        OnWatering();
+        
     }
     private void FixedUpdate()
     {
-        OnMove();
+        if (!isPaused)
+        {
+            OnMove();
+        }
     }
 
     #region Movement
 
     void OnWatering()
     {
-        if (handlingObj == 3)
+        if (handlingObj == 2)
         {
             if (Input.GetMouseButtonDown(0) && playerItems.CurrentWater > 0)
             {
@@ -117,7 +124,7 @@ public class Player : MonoBehaviour
     }
     void OnCut()
     {
-        if(handlingObj == 1)
+        if(handlingObj == 0)
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -135,7 +142,7 @@ public class Player : MonoBehaviour
 
     void OnDig()
     {
-        if(handlingObj == 2)
+        if(handlingObj == 1)
         {
             if (Input.GetMouseButtonDown(0))
             {
