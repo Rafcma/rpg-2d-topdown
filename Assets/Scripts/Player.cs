@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     private bool _isCutting;
     private bool _isDigging;
     private bool _isWatering;
+    private bool _isAttacking;
 
 
 
@@ -56,6 +57,7 @@ public class Player : MonoBehaviour
         set { _isWatering = value; }
     }
 
+    public bool IsAttacking { get => _isAttacking; set => _isAttacking = value; }
 
     private void Start() 
     {
@@ -81,6 +83,10 @@ public class Player : MonoBehaviour
             {
                 handlingObj = 2;
             }
+            if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                handlingObj = 3;
+            }
 
             OnInput();
             OnRun();
@@ -88,6 +94,7 @@ public class Player : MonoBehaviour
             OnCut();
             OnDig();
             OnWatering();
+            OnAttacking();
         }
         
     }
@@ -100,6 +107,24 @@ public class Player : MonoBehaviour
     }
 
     #region Movement
+
+    void OnAttacking()
+    {
+        if (handlingObj == 3)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                IsAttacking = true;
+                speed = 0f;
+            }
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                IsAttacking = false;
+                speed = initialSpeed;
+            }
+        }
+    }
 
     void OnWatering()
     {

@@ -16,6 +16,7 @@ public class PlayerItems : MonoBehaviour
     [SerializeField] private float woodLimit = 10; //max de madeira
     [SerializeField] private float fishLimit = 5; //max de peixe
 
+    #region public-variaveis
     public int TotalWood { get => totalWood; set => totalWood = value; }
     public float CurrentWater { get => currentWater; set => currentWater = value; }
     public int Carrots { get => carrots; set => carrots = value; }
@@ -25,6 +26,7 @@ public class PlayerItems : MonoBehaviour
     public int Fishes { get => fishes; set => fishes = value; }
     public float FishLimit { get => fishLimit; set => fishLimit = value; }
 
+    #endregion
     public void CheckWaterLimit(float water)
     {
         if(CurrentWater < WaterLimit)

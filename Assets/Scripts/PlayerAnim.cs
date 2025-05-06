@@ -4,10 +4,19 @@ using UnityEngine;
 
 public class PlayerAnim : MonoBehaviour
 {
+    [Header("Attack Settings")]
+    [SerializeField] private Transform attackPoint;
+    [SerializeField] private float radius;
+    [SerializeField] private LayerMask enemyLayer;
+
     private Player player;
     private Animator anim;
 
     private Casting cast;
+
+    private bool isHitting;
+    private float recoveryTime = 1f;
+    private float timeCount;
 
     void Start()
     {
@@ -22,6 +31,18 @@ public class PlayerAnim : MonoBehaviour
     {
         OnMove();
         OnRun();
+
+        if (isHitting)
+        {
+            timeCount += Time.deltaTime;
+
+            if (timeCount >= recoveryTime)
+            {
+                isHitting = false;
+                timeCount = 0f;
+            }
+        }
+
     }
 
     #region Movement
@@ -63,6 +84,10 @@ public class PlayerAnim : MonoBehaviour
         {
             anim.SetInteger("transition", 5);
         }
+        if (player.IsAttacking)
+        {
+            anim.SetInteger("transition", 6);
+        }
     }
     void OnRun()
     {
@@ -71,6 +96,24 @@ public class PlayerAnim : MonoBehaviour
             anim.SetInteger("transition", 2);
         }
     }
+    #endregion
+
+    #region Attack
+
+    public void OnAttack()
+    {
+        Collider2D hit = Physics2D.OverlapCircle(attackPoint.position, radius, enemyLayer);
+
+        if(hit != null)// atacou o inimigo
+        {
+            Debug.Log("acertou");
+        }
+    }
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(attackPoint.position, radius);
+    }
+
     #endregion
 
     #region Fishing
@@ -89,5 +132,24 @@ public class PlayerAnim : MonoBehaviour
 
 
     #endregion
+
+    public void OnHammeringStarted()
+    {
+        anim.SetBool("hammering", true);
+    }
+
+    public void OnHammeringEnded()
+    {
+        anim.SetBool("hammering", false);
+    }
+
+    public void OnHit()
+    {
+        if (!isHitting)
+        {
+            anim.SetTrigger("hit");
+            isHitting = true;
+        }
+    }
 
 }
